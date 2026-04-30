@@ -31,7 +31,7 @@ namespace ReportGeneration_Shashin.Pages
         {
             InitializeComponent();
             CreateGroupUI();
-            CreateStudents();
+            CreateStudents(AllStudents);
         }
 
         private void SelectGroup(object sender, SelectionChangedEventArgs e)
@@ -56,7 +56,11 @@ namespace ReportGeneration_Shashin.Pages
 
         private void ReportGeneration(object sender, RoutedEventArgs e)
         {
-
+            if(CBGroups.SelectedIndex != CBGroups.Items.Count - 1)
+            {
+                int idGroup = AllGroups.Find(x => x.Name == CBGroups.SelectedItem).Id;
+                Classes.Common.Report.Group(idGroup, this);
+            }
         }
 
         public void CreateGroupUI()

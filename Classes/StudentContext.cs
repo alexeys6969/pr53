@@ -21,12 +21,13 @@ namespace ReportGeneration_Shashin.Classes
             while (BDStudents.Read())
             {
                 allStudents.Add(new StudentContext(
-                    BDStudents.GetInt32(0),
-                    BDStudents.GetString(1),
-                    BDStudents.GetString(2),
-                    BDStudents.GetInt32(3),
-                    BDStudents.GetBoolean(4),
-                    BDStudents.GetDateTime(5)));
+                    BDStudents.IsDBNull(0) ? 0 : BDStudents.GetInt32(0),
+                    BDStudents.IsDBNull(1) ? "" : BDStudents.GetString(1),
+                    BDStudents.IsDBNull(2) ? "" : BDStudents.GetString(2),
+                    BDStudents.IsDBNull(3) ? 0 : BDStudents.GetInt32(3),
+                    BDStudents.IsDBNull(4) ? false : BDStudents.GetBoolean(4),
+                    BDStudents.IsDBNull(5) ? DateTime.MinValue : BDStudents.GetDateTime(5)
+                ));
             }
             Connection.CloseConnection(connection);
             return allStudents;

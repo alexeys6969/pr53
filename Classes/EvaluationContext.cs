@@ -17,7 +17,7 @@ namespace ReportGeneration_Shashin.Classes
         {
             List<EvaluationContext> allEvaluations = new List<EvaluationContext>();
             MySql.Data.MySqlClient.MySqlConnection connection = Connection.OpenConnection();
-            MySql.Data.MySqlClient.MySqlDataReader BDEval = Connection.Query("SELECT * FROM evaluations;", connection);
+            MySql.Data.MySqlClient.MySqlDataReader BDEval = Connection.Query("SELECT * FROM evaluation;", connection);
             while (BDEval.Read())
             {
                 allEvaluations.Add(new EvaluationContext(

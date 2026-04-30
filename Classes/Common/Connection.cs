@@ -9,7 +9,7 @@ namespace ReportGeneration_Shashin.Classes.Common
 {
     public class Connection
     {
-        public static string congig = "server=127.0.0.1;port=3307uid=root;pwd=;database=journal";
+        public static string congig = "server=127.0.0.1;port=3306;uid=root;pwd=;database=journal";
         public static MySqlConnection OpenConnection()
         {
             MySqlConnection connection = new MySqlConnection(congig);

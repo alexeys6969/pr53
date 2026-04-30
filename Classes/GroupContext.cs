@@ -18,7 +18,7 @@ namespace ReportGeneration_Shashin.Classes
         {
             List<GroupContext> allGroups = new List<GroupContext>();
             MySqlConnection connection = Connection.OpenConnection();
-            MySqlDataReader BDGroups = Connection.Query("SELECT * FROM group ORDER BY Name;", connection);
+            MySqlDataReader BDGroups = Connection.Query("SELECT * FROM `Group` ORDER BY Name;", connection);
             while (BDGroups.Read())
             {
                 allGroups.Add(new GroupContext(
