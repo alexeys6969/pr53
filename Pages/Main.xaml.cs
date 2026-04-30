@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ReportGeneration_Shashin.Classes;
 
 namespace ReportGeneration_Shashin.Pages
 {
@@ -20,9 +21,58 @@ namespace ReportGeneration_Shashin.Pages
     /// </summary>
     public partial class Main : Page
     {
+        public List<GroupContext> AllGroups = GroupContext.AllGroups();
+        public List<StudentContext> AllStudents = StudentContext.AllStudents();
+        public List<WorkContext> AllWorks = WorkContext.AllWorks();
+        public List<EvaluationContext> AllEvaluations = EvaluationContext.AllEvaluations();
+        public List<DisciplineContext> AllDisciplines = DisciplineContext.AllDisciplines();
+
         public Main()
         {
             InitializeComponent();
+            CreateGroupUI();
+            CreateStudents();
+        }
+
+        private void SelectGroup(object sender, SelectionChangedEventArgs e)
+        {
+            if(CBGroups.SelectedIndex != CBGroups.Items.Count - 1)
+            {
+                int idGroup = AllGroups.Find(x => x.Name == CBGroups.SelectedItem).Id;
+                CreateStudents(AllStudents.FindAll(x => x.IdGroup == idGroup));
+            }
+        }
+
+        private void SelectStudents(object sender, KeyEventArgs e)
+        {
+            List<StudentContext> SearchStudents = AllStudents;
+            if (CBGroups.SelectedIndex != CBGroups.Items.Count - 1)
+            {
+                int idGroup = AllGroups.Find(x => x.Name == CBGroups.SelectedItem).Id;
+                SearchStudents = AllStudents.FindAll(x => x.IdGroup == idGroup);
+            }
+            CreateStudents(SearchStudents.FindAll(x => $"{x.Lastname} {x.Firstname}".Contains(TBFio.Text)));
+        }
+
+        private void ReportGeneration(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        public void CreateGroupUI()
+        {
+            foreach (GroupContext Group in AllGroups)
+                CBGroups.Items.Add(Group.Name);
+
+            CBGroups.Items.Add("Выберите");
+            CBGroups.SelectedIndex = CBGroups.Items.Count - 1;
+        }
+
+        public void CreateStudents(List<StudentContext> AllStudents)
+        {
+            Parent.Children.Clear();
+            foreach (StudentContext Student in AllStudents)
+                Parent.Children.Add(new Items.Student(Student, this));
         }
     }
 }
